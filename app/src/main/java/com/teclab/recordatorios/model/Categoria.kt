@@ -1,10 +1,5 @@
 package com.teclab.recordatorios.model
 
-/**
- * Categoría de un recordatorio.
- * Las categorías fijas son objetos únicos; `Otra` permite que el usuario
- * defina una categoría propia, validando que su nombre no esté vacío.
- */
 sealed class Categoria(val nombre: String) {
     data object Trabajo : Categoria("Trabajo")
     data object Estudio : Categoria("Estudio")

@@ -5,14 +5,8 @@ import com.teclab.recordatorios.model.EstadoRecordatorio
 import com.teclab.recordatorios.model.Prioridad
 import com.teclab.recordatorios.model.Recordatorio
 
-/**
- * Datos simulados mientras no exista persistencia ni backend.
- * En próximos módulos este objeto se reemplaza por un repositorio real
- * (Room / API) sin que la UI se entere del cambio.
- */
 object RecordatoriosMock {
 
-    /** List: colección ORDENADA que admite repetidos. Es la fuente principal de datos. */
     val recordatorios: List<Recordatorio> = listOf(
         Recordatorio(
             id = 1,
@@ -72,14 +66,8 @@ object RecordatoriosMock {
         ),
     )
 
-    /**
-     * Set: NO admite repetidos. Aunque varios recordatorios compartan categoría
-     * (ej. dos de "Estudio" y dos de "Hogar"), cada una aparece una sola vez.
-     * Funciona porque data object / data class implementan equals() por valor.
-     */
-    val categorias: Set<Categoria> = recordatorios.map { it.categoria }.toSet()
+    val categorias: Set<Categoria> = recordatorios.categoriasUnicas()
 
-    /** Map: asocia cada categoría con una etiqueta (emoji) para mostrar en la UI. */
     val etiquetasPorCategoria: Map<Categoria, String> = mapOf(
         Categoria.Trabajo to "💼",
         Categoria.Estudio to "📚",
@@ -87,6 +75,5 @@ object RecordatoriosMock {
         Categoria.Personal to "🙂",
     )
 
-    /** Las categorías personalizadas (Otra) no están en el Map: usan una etiqueta por defecto. */
     fun etiquetaDe(categoria: Categoria): String = etiquetasPorCategoria[categoria] ?: "📌"
 }

@@ -1,12 +1,5 @@
 package com.teclab.recordatorios.model
 
-/**
- * Recordatorio inmutable: todas sus propiedades son `val`.
- * Para "modificarlo" se crea una copia con `copy(...)`.
- *
- * Los campos opcionales (`?`) representan datos que no todo recordatorio tiene.
- * Las validaciones del bloque `init` impiden construir un recordatorio inválido.
- */
 data class Recordatorio(
     val id: Int,
     val titulo: String,
@@ -28,10 +21,6 @@ data class Recordatorio(
     companion object {
         const val TITULO_MAX = 50
 
-        /**
-         * Versión "segura" del constructor: en lugar de lanzar una excepción,
-         * devuelve un Result. Útil cuando los datos vienen de un formulario.
-         */
         fun crear(
             id: Int,
             titulo: String,
