@@ -31,11 +31,15 @@ import com.teclab.recordatorios.ui.theme.colorDePrioridad
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun RecordatorioCard(recordatorio: Recordatorio, modifier: Modifier = Modifier) {
+fun RecordatorioCard(
+    recordatorio: Recordatorio,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val colorCategoria = colorDe(recordatorio.categoria)
     val completado = recordatorio.estado == EstadoRecordatorio.Completado
 
-    ElevatedCard(modifier = modifier.fillMaxWidth()) {
+    ElevatedCard(onClick = onClick, modifier = modifier.fillMaxWidth()) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             Box(
                 modifier = Modifier
@@ -96,6 +100,7 @@ private fun RecordatorioCardPreview() {
     RecordatoriosTheme {
         RecordatorioCard(
             recordatorio = RecordatoriosMock.recordatorios.first(),
+            onClick = {},
             modifier = Modifier.padding(16.dp),
         )
     }

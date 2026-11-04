@@ -11,26 +11,17 @@ data class Recordatorio(
 ) {
     init {
         require(id > 0) { "El id debe ser positivo" }
-        require(titulo.isNotBlank()) { "El título no puede estar vacío" }
-        require(titulo.length <= TITULO_MAX) { "El título no puede superar los $TITULO_MAX caracteres" }
+        ValidacionRecordatorio.validarTitulo(titulo)?.let { throw IllegalArgumentException(it) }
         require(descripcion == null || descripcion.isNotBlank()) { "La descripción, si existe, no puede estar vacía" }
+        descripcion?.let(ValidacionRecordatorio::validarDescripcion)?.let { throw IllegalArgumentException(it) }
     }
 
     val tieneUbicacion: Boolean get() = ubicacion != null
-
-    companion object {
-        const val TITULO_MAX = 50
-
-        fun crear(
-            id: Int,
-            titulo: String,
-            categoria: Categoria,
-            prioridad: Prioridad,
-            estado: EstadoRecordatorio = EstadoRecordatorio.Pendiente,
-            descripcion: String? = null,
-            ubicacion: String? = null,
-        ): Result<Recordatorio> = runCatching {
-            Recordatorio(id, titulo.trim(), categoria, prioridad, estado, descripcion, ubicacion)
-        }
-    }
 }
+
+data class NuevoRecordatorio(
+    val titulo: String,
+    val descripcion: String?,
+    val categoria: Categoria,
+    val prioridad: Prioridad,
+)
